@@ -4,7 +4,9 @@ namespace TeamWorkPm;
 
 class Auth
 {
-    private static $url = 'https://authenticate.teamwork.com/';
+    const DEFAULT_URL = 'https://authenticate.teamwork.com/';
+    
+    private static $url = self::DEFAULT_URL;
 
     private static $config = [
         'url' => null,
@@ -15,6 +17,14 @@ class Auth
 
     public static function set()
     {
+        // Reset to defaults when setting new auth
+        self::$is_subdomain = false;
+        self::$url = self::DEFAULT_URL;
+        self::$config = [
+            'url' => null,
+            'key' => null
+        ];
+        
         $num_args = func_num_args();
         if ($num_args === 1) {
             self::$config['url'] = self::$url;
